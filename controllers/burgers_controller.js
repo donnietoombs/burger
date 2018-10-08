@@ -6,33 +6,32 @@ var burger = require('../models/burger.js');
 
 
 // Route to pull all order
-router.get("/burgers", function (req, res) {
+router.get("/", function (req, res) {
     burger.all(function (data) {
         var hbsObject = {
             burgers: data
         };
         console.log(hbsObject);
-        res.render('index', hbsObject);
+        res.render("index", hbsObject);
     });
 });
+
 router.post("/api/burgers", function (req, res) {
     burger.create([
-        "burger_name", "devoured"
+      "name",
     ], [
-        req.body.name, req.body.devoured
+      req.body.name,
     ], function (result) {
-        // Send back the ID of the new quote
-        res.json({
-            id: result.insertId
-        });
+      // Send back the ID of the new quote
+      res.json({
+        id: result.insertId
+      });
     });
-});
+  });
 
-
-
-// Route to update burger databse when order picked up
+// Route to update burger database when order picked up
 router.put("api/burgers/:id", function (req, res) {
-    var condition = 'id = ' + req.params.id;
+    var condition = "id = " + req.params.id;
 
     console.log('condition', condition);
 
@@ -49,7 +48,7 @@ router.put("api/burgers/:id", function (req, res) {
 });
 
 //If need in the future
-outer.delete("/api/burgers/:id", function (req, res) {
+router.delete("/api/burgers/:id", function (req, res) {
     var condition = "id = " + req.params.id;
   
     burger.delete(condition, function (result) {
